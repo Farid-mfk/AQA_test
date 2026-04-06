@@ -145,3 +145,19 @@ if __name__ == "__main__":
         print(f"✅ Навели на изображение. Текст: {user_name.inner_text()}")
 
         browser.close()
+
+if __name__ == "__main__":
+    with sync_playwright() as p:
+        browser = p.chromium.launch(headless=False, slow_mo=1000)
+        page = browser.new_page()
+
+        page.goto("https://the-internet.herokuapp.com/javascript_alerts")
+
+        page.get_by_role("button", name="Click for JS Alert").click()
+
+        result_text = page.locator("#result")
+        expect(result_text).to_have_text("You successfully clicked an alert")
+
+        print(f"✅ Alert принят. Сообщение: {result_text.inner_text()}")
+
+        browser.close()
