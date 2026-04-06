@@ -146,5 +146,3 @@ if __name__ == "__main__":
 
         browser.close()
 
-
-if __name__ == "__main__":
