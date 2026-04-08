@@ -146,3 +146,58 @@ if __name__ == "__main__":
 
         browser.close()
 
+if __name__ == "__main__":
+    with sync_playwright() as p:
+        browser = p.chromium.launch(headless=False, slow_mo=1000)
+        page = browser.new_page()
+
+        page.goto("https://the-internet.herokuapp.com/javascript_alerts")
+
+        page.get_by_role("button", name="Click for JS Alert").click()
+
+        result_text = page.locator("#result")
+        expect(result_text).to_have_text("You successfully clicked an alert")
+
+        print(f"✅ Alert принят. Сообщение: {result_text.inner_text()}")
+
+        browser.close()
+
+if __name__ == "__main__":
+    with sync_playwright() as p:
+        browser = p.chromium.launch(headless=False, slow_mo=1000)
+        page = browser.new_page()
+
+        page.goto("https://the-internet.herokuapp.com/upload")
+
+        file_name = "test_upload.txt"
+        with open(file_name, "w", encoding="utf-8") as f:
+            f.write("Hello Playwright")
+
+        page.locator("#file-upload").set_input_files(file_name)
+
+        page.get_by_role("button", name="Upload").click()
+
+        uploaded_info = page.locator("#uploaded-files")
+        expect(uploaded_info).to_contain_text(file_name)
+
+        print(f"✅ Файл загружен: {uploaded_info.inner_text().strip()}")
+
+        browser.close()
+
+if __name__ == "__main__":
+    with sync_playwright() as p:
+        browser = p.chromium.launch(headless=False, slow_mo=500)
+        page = browser.new_page()
+
+        page.goto("https://the-internet.herokuapp.com/dynamic_loading/1")
+
+        page.get_by_role("button", name="Start").click()
+
+        finish_text = page.locator("#finish h4")
+        expect(finish_text).to_be_visible()
+
+        assert finish_text.inner_text() == "Hello World!"
+
+        print(f"✅ Элемент появился: {finish_text.inner_text()}")
+
+        browser.close()
