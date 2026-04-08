@@ -183,3 +183,21 @@ if __name__ == "__main__":
         print(f"✅ Файл загружен: {uploaded_info.inner_text().strip()}")
 
         browser.close()
+
+if __name__ == "__main__":
+    with sync_playwright() as p:
+        browser = p.chromium.launch(headless=False, slow_mo=500)
+        page = browser.new_page()
+
+        page.goto("https://the-internet.herokuapp.com/dynamic_loading/1")
+
+        page.get_by_role("button", name="Start").click()
+
+        finish_text = page.locator("#finish h4")
+        expect(finish_text).to_be_visible()
+
+        assert finish_text.inner_text() == "Hello World!"
+
+        print(f"✅ Элемент появился: {finish_text.inner_text()}")
+
+        browser.close()
