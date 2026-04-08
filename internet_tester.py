@@ -145,4 +145,3 @@ if __name__ == "__main__":
         print(f"✅ Навели на изображение. Текст: {user_name.inner_text()}")
 
         browser.close()
-
