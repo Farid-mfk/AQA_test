@@ -169,7 +169,7 @@ if __name__ == "__main__":
 
         page.goto("https://the-internet.herokuapp.com/upload")
 
-        file_name = "test_upload.txt"
+        file_name = "../test_upload.txt"
         with open(file_name, "w", encoding="utf-8") as f:
             f.write("Hello Playwright")
 
